@@ -4,7 +4,7 @@
 # Maintainer: J. Scaffidi <jscaffidi@qnx.com>
 pkgname=chrony
 pkgver=4.8
-pkgrel=2
+pkgrel=3
 pkgdesc="Advanced NTP client and server"
 url="https://gitlab.com/chrony/chrony/"
 arch="all"
