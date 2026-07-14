@@ -1,0 +1,48 @@
+# Alpine-Contributor: Sören Tempel <soeren+alpine@soeren-tempel.net>
+# Alpine-Contributor: Carlo Landmeter <clandmeter@alpinelinux.org>
+# Alpine-Maintainer: mio <miyopan@e.email>
+# Maintainer: jscaffidi <jscaffidi@qnx.com>
+pkgname=htop
+pkgver=3.5.0
+pkgrel=0
+pkgdesc="Interactive process viewer"
+url="https://htop.dev/"
+arch="all"
+license="GPL-2.0-or-later"
+# lsof is needed for the "open files" screen (keybinding: l).
+# Without this dependency, this screen doesn't emit an error
+# as busybox provides lsof but its output format is incompatible.
+# QNX we don't have this ported
+# depends="lsof"
+depends="ncurses"
+makedepends="ncurses-dev qnx-io-sock-dev qnx-fs-core-dev qnx-fs-gpt-dev automake"
+subpackages="$pkgname-doc"
+
+builddir="$srcdir/$pkgname-qnx-$pkgver-r$pkgrel"
+source="$pkgname-qnx-$pkgver-r$pkgrel.tar.gz::https://github.com/qnx-ports/$pkgname/archive/refs/tags/qnx-$pkgver-r$pkgrel.tar.gz"
+options="!check" # no upstream/available test-suite
+
+prepare() {
+    default_prepare
+
+    "$builddir"/autogen.sh
+}
+
+build() {
+    ./autogen.sh
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man
+	make
+}
+
+package() {
+	make DESTDIR="$pkgdir" pixmapdir=/usr/share/icons/hicolor/128x128/apps install
+}
+
+
+
+sha512sums="
+b9ff1b8f2a3312c43051f47bb2c9480fc14978290e02acbea1ae5c41ea6b3e8f0b887008806862fb991b9a43b5ebfd29ce6a248f00579398fe8bd80ccce5ab0b  htop-qnx-3.5.0-r0.tar.gz
+"
