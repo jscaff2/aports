@@ -3,7 +3,7 @@ pkgname=ca-certificates
 pkgver=1
 _curl_ver=8.16.0
 _nss_ver=3.117
-pkgrel=3
+pkgrel=4
 pkgdesc="CA certificates provider"
 url="https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/"
 arch="noarch"
@@ -20,6 +20,7 @@ source="https://raw.githubusercontent.com/curl/curl/refs/tags/curl-${_curl_ver//
 "
 
 build() {
+    cd "$srcdir"
     perl mk-ca-bundle.pl -i -w 78 -n
 }
 
@@ -36,6 +37,7 @@ mozilla() {
     pkgver="$_nss_ver"
     depends=""
     provides="ca-certificates-bundle"
+    provider_priority="1"
 
     install -Dm644 "$srcdir"/ca-bundle.crt "$subpkgdir"/usr/share/ca-certificates/trust-source/anchors/mozilla-ca-bundle.crt
 }
