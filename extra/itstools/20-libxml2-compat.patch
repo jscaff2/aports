@@ -1,5 +1,5 @@
---- itstool.in.orig	2025-10-01 12:48:05.000000000 +0000
-+++ itstool.in	2025-10-01 12:51:05.000000000 +0000
+--- a/itstool.in	2025-10-01 12:48:05.000000000 +0000
++++ b/itstool.in	2025-10-01 12:51:05.000000000 +0000
 @@ -465,7 +465,10 @@
  class Document (object):
      def __init__ (self, filename, messages, load_dtd=False, keep_entities=False):
